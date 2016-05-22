@@ -1,5 +1,5 @@
 //Handle Firebase Data
-var fireBaseRef = new Firebase ('https://project-7555322063986067860.firebaseio.com');
+var postsListRef = new Firebase ('https://project-7555322063986067860.firebaseio.com/postsList');
 
 var onComplete = function(error) {
   'use strict';
@@ -10,20 +10,30 @@ var onComplete = function(error) {
   }
 };
 
-var test = fireBaseRef.child('test');
-test.set({
-  testUser: {
-    name: 'test',
-  }
-}, onComplete);
+//Clear Messages
+Post.prototype.clearData = function(){
+  'use strict';
+  postsListRef.remove();
+};
 
-var getTest = test.on('value', function(snapshot) {
+//Set Data
+Post.prototype.pushData = function(dataWePassIn){
   'use strict';
-  console.log(snapshot.val());
-}, function (errorObject) {
+  dataWePassIn.map(function(post){
+    postsListRef.push({newPost: post}, onComplete);
+  });
+};
+
+//Retrive Data
+Post.prototype.getData = function(){
   'use strict';
-  console.log('The read failed: " + errorObject.code');
-});
+  postsListRef.on('value', function(snapshot) {
+    console.log(snapshot.val());
+    Post.all.push(snapshot.val());
+  }, function (errorObject) {
+    console.log('The read failed: ' + errorObject.code);
+  });
+};
 
 //Array holding all posts
 Post.All = [];
@@ -54,13 +64,25 @@ Post.prototype.appendAll = function(dataToAppend) {
 //Submit posts event listener
 $('button').on('click', function(){
   'use strict';
+
+  //Get data from input fields
   var inputAuthor = $('#author-name-input').val();
   var inputContent = $('#author-content-input').val();
   console.log(inputAuthor, inputContent);
 
+  //Create new post object
   Post.All.push(new Post(inputAuthor, inputContent));
-  //Append all posts to posts-list
+
+  //Clear input fields
   $('#posts-list').html(null);
+
+  //Clear all data in firebase
+  Post.prototype.clearData();
+
+  //Push all data to firebase
+  Post.prototype.pushData(Post.All);
+
+  //Append all posts to posts-list
   Post.prototype.appendAll(Post.All);
 
   $('#author-name-input').val('');
