@@ -12,15 +12,33 @@
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
 
+    <script id="posts-template" type="text/x-handlebars-template">
+      <article>
+          <h3>{{postAuthor}}</h3>
+          <p>{{postContent}}</p>
+      </article>
+    </script>
+
 </head>
 
 <body>
   <header>
     <h1>Firebase Practice Project</h1>
   </header>
+  <main>
+    <article class="mainContent">
+      <div id="posts-form">
+        <input type="text" id="author-name-input">
+        <input type="text" id="author-content-input">
+        <button type="button" name="posts-submit-button">Submit Post</button>
+      </div>
+      <div id="posts-list">
+      </div>
+    </article>
+  </main>
 
   <!-- Javascript -->
-  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+  <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
   <script>
     // Initialize Firebase
     var config = {
@@ -29,10 +47,10 @@
       databaseURL: "https://project-7555322063986067860.firebaseio.com",
       storageBucket: "",
     };
-    firebase.initializeApp(config);
   </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  <script async type="text/javascript" src="js/app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
 </body>
 
 </html>
