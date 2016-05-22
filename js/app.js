@@ -35,12 +35,6 @@ function Post(postAuthor, postContent){
   this.postContent = postContent;
 };
 
-//Test Posts
-postOne = new Post('Person one', 'Lots of cool stuff.');
-postTwo = new Post('Person two', 'More cool stuff!!!');
-
-Post.All.push(postOne, postTwo);
-
 //Write post to HTML
 Post.prototype.toHtml = function(){
   'use strict';
@@ -61,9 +55,12 @@ Post.prototype.appendAll = function(dataToAppend) {
 $('button').on('click', function(){
   'use strict';
   var inputAuthor = $('#author-name-input').val();
-  var inputConent = $('#author-content-input').val();
-  console.log(inputAuthor, inputConent);
+  var inputContent = $('#author-content-input').val();
+  console.log(inputAuthor, inputContent);
+
+  Post.All.push(new Post(inputAuthor, inputContent));
   //Append all posts to posts-list
+  $('#posts-list').html(null);
   Post.prototype.appendAll(Post.All);
 
   $('#author-name-input').val('');
