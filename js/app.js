@@ -1,6 +1,7 @@
-//Handle Firebase Data
+//Firebase Reference
 var postsListRef = new Firebase ('https://project-7555322063986067860.firebaseio.com/postsList');
 
+//Success message
 var onComplete = function(error) {
   'use strict';
   if (error) {
@@ -21,17 +22,6 @@ Post.prototype.pushData = function(dataWePassIn){
   'use strict';
   dataWePassIn.map(function(post){
     postsListRef.push({newPost: post}, onComplete);
-  });
-};
-
-//Retrive Data
-Post.prototype.getData = function(){
-  'use strict';
-  postsListRef.on('value', function(snapshot) {
-    console.log(snapshot.val());
-    Post.all.push(snapshot.val());
-  }, function (errorObject) {
-    console.log('The read failed: ' + errorObject.code);
   });
 };
 
@@ -76,7 +66,7 @@ $('button').on('click', function(){
   //Clear input fields
   $('#posts-list').html(null);
 
-  //Clear all data in firebase
+  //Clear Firebase data
   Post.prototype.clearData();
 
   //Push all data to firebase
