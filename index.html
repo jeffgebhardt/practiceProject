@@ -28,9 +28,12 @@
   <main>
     <article class="mainContent">
       <div id="posts-form">
-        <input type="text" id="author-name-input">
-        <input type="text" id="author-content-input">
-        <button type="button" name="posts-submit-button">Submit Post</button>
+        <form>
+          <input type="text" id="author-name-input" required>
+          <input type="text" id="author-content-input" required>
+          <button type="button" name="posts-submit-button">Submit Post</button>
+          <button type="button" name="posts-clear-button">Clear Posts</button>
+        </form>
       </div>
       <div id="posts-list">
       </div>
