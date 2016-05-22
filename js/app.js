@@ -1,3 +1,4 @@
+//Handle Firebase Data
 var fireBaseRef = new Firebase ('https://project-7555322063986067860.firebaseio.com');
 
 var onComplete = function(error) {
@@ -16,13 +17,6 @@ test.set({
   }
 }, onComplete);
 
-var test2 = fireBaseRef.child('test2');
-test2.set({
-  testUser2: {
-    name: 'test2',
-  }
-}, onComplete);
-
 var getTest = test.on('value', function(snapshot) {
   'use strict';
   console.log(snapshot.val());
@@ -31,10 +25,47 @@ var getTest = test.on('value', function(snapshot) {
   console.log('The read failed: " + errorObject.code');
 });
 
-var getTest2 = test2.on('value', function(snapshot) {
+//Array holding all posts
+Post.All = [];
+
+//Create Message object
+function Post(postAuthor, postContent){
   'use strict';
-  console.log(snapshot.val());
-}, function (errorObject) {
+  this.postAuthor = postAuthor;
+  this.postContent = postContent;
+};
+
+//Test Posts
+postOne = new Post('Person one', 'Lots of cool stuff.');
+postTwo = new Post('Person two', 'More cool stuff!!!');
+
+Post.All.push(postOne, postTwo);
+
+//Write post to HTML
+Post.prototype.toHtml = function(){
   'use strict';
-  console.log('The read failed: " + errorObject.code');
+  var $source = $('#posts-template').html();
+  var template = Handlebars.compile($source);
+  return template(this);
+};
+
+//Append Data to DOM
+Post.prototype.appendAll = function(dataToAppend) {
+  'use strict';
+  dataToAppend.map(function(p) {
+    return $('#posts-list').append(p.toHtml());
+  });
+};
+
+//Submit posts event listener
+$('button').on('click', function(){
+  'use strict';
+  var inputAuthor = $('#author-name-input').val();
+  var inputConent = $('#author-content-input').val();
+  console.log(inputAuthor, inputConent);
+  //Append all posts to posts-list
+  Post.prototype.appendAll(Post.All);
+
+  $('#author-name-input').val('');
+  $('#author-content-input').val('');
 });

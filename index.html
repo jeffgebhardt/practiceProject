@@ -12,6 +12,13 @@
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
 
+    <script id="posts-template" type="text/x-handlebars-template">
+      <article>
+          <h3>{{postAuthor}}</h3>
+          <p>{{postContent}}</p>
+      </article>
+    </script>
+
 </head>
 
 <body>
@@ -20,8 +27,13 @@
   </header>
   <main>
     <article class="mainContent">
-      <ul id="appendData">
-      </ul>
+      <div id="posts-form">
+        <input type="text" id="author-name-input">
+        <input type="text" id="author-content-input">
+        <button type="button" name="posts-submit-button">Submit Post</button>
+      </div>
+      <div id="posts-list">
+      </div>
     </article>
   </main>
 
@@ -37,6 +49,7 @@
     };
   </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
   <script type="text/javascript" src="js/app.js"></script>
 </body>
 
